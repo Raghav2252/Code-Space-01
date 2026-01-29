@@ -1,0 +1,28 @@
+.global_Head{
+    background-color: rgb(255, 0, 0, 0.5);
+    height: 50px;
+    padding: 10px;
+    border: 5px solid tomato;
+    display: flex;
+    }
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: inline;}
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+.Box{
+    height: 50%;
+    width: 30%;
+    /* We can set height & width reletive to parent */
+    background-color: gray;
+    margin-top: 10px;
+    color: white;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    align-content: center;
+}

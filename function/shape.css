@@ -1,0 +1,12 @@
+.shape {
+  float: right;
+  width: 200px;
+  height: 200px;
+  shape-outside: circle(50%);
+  clip-path: circle(50%);
+  background: rgb(10, 139, 182);
+  align-content: center;
+  text-transform: capitalize;
+  text-align: center;
+  color: chartreuse;
+}

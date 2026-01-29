@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Basic Calculator</title>
+    <link rel="stylesheet" href="calc.css">
+</head>
+<body>
+    <div id="OB">
+        <p>Basic Calculator </p>
+        <div id="display"></div>
+        <button>c</button>
+        <button onclick="
+        initialtext = +1;
+        document.getElementById('display').innerHTML = initialtext;
+        ">1</button>
+        <button>2</button>
+        <button>+</button>
+        <button>3</button>
+        <button>4</button>
+        <button>-</button>
+        <button>5</button>
+        <button>6</button>
+        <button>*</button>
+        <button>7</button>
+        <button>8</button>
+        <button>/</button>
+        <button>=</button>
+        <button>9</button>
+        <button>0</button>
+        <button>.</button>
+    </div>
+    <script>
+        let initialtext = '0';
+        document.getElementById('display').innerHTML = initialtext;
+    </script>
+</body>
+</html>

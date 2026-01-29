@@ -1,0 +1,19 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+.para{
+    height: 200px;
+    width: 200px;
+    background-color: darkgoldenrod;
+    border: 4px solid black;
+    border-radius: 8px;
+    box-shadow : 0 0 5px 5px  rebeccapurple;
+}
+p{
+    color: azure;
+    margin: 5px;
+    padding: 5px;
+}

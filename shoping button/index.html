@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Define Function fro shoping buttons</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Myntra Bag Exercise</h1>
+    <button id="BTN1" onclick="
+    bagItem ++ ; 
+    document.querySelector('#BagSummary').innerHTML= 'Your bag has ' + bagItem + ' items' "">Add To Bag</button>
+    <button id="BTN2" onclick="
+    bagItem = bagItem - 1;
+    document.querySelector('#BagSummary').innerHTML= 'Your bag has ' + bagItem + ' items' ">Move To Wishlist</button>
+    <button id="BTN3" onclick="
+    bagItem = bagItem + 2;
+    document.querySelector('#BagSummary').innerHTML= 'Your bag has ' + bagItem + ' items' ">Add 1 + 1 sale Item</button>
+    <h2 id="BagSummary">Your bag has 0 items</h2>
+    <script>
+        let bagItem = 0;
+    </script>
+    <script>
+        let learnJava = "Let's learn Java Script";
+        console.log(learnJava);
+    </script>
+</body>
+</html>

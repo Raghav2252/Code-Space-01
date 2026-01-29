@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Blinking Cursor Search Bar</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 50px;
+      background: #f4f4f4;
+    }
+
+    .search-container {
+      position: relative;
+      width: 300px;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: white;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-text {
+      flex: 1;
+      outline: none;
+      border: none;
+    }
+
+    .cursor {
+      width: 15px;
+      height: 2px;
+      background: black;
+      margin-left: 2px;
+      animation: blink 1s step-start infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="search-container" contenteditable="true">
+    <span class="search-text" id="search-text"></span>
+    <div class="cursor" id="cursor"></div>
+  </div>
+
+  <script>
+    const container = document.querySelector('.search-container');
+    const textEl = document.getElementById('search-text');
+
+    container.addEventListener('keydown', function(e) {
+      if (e.key.length === 1) {
+        textEl.textContent += e.key;
+      } else if (e.key === 'Backspace') {
+        textEl.textContent = textEl.textContent.slice(0, -1);
+      }
+      e.preventDefault(); // Prevent default contentEditable behavior
+    });
+  </script>
+
+</body>
+</html>

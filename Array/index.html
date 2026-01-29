@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Interactive JavaScript Array Operations Visualizer - Learn array methods with stunning visual animations">
+    <title>Array Operations Visualizer - Interactive JavaScript Learning</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, hsl(240, 20%, 10%) 0%, hsl(260, 25%, 15%) 100%);
+            color: hsl(0, 0%, 95%);
+            min-height: 100vh;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+
+        /* Animated background particles */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 30%, hsla(260, 80%, 60%, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, hsla(180, 70%, 50%, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, hsl(260, 80%, 60%) 0%, hsl(180, 70%, 50%) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 30px hsla(260, 80%, 60%, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: hsl(0, 0%, 70%);
+            font-weight: 400;
+        }
+
+        /* Control Panel */
+        .control-panel {
+            background: linear-gradient(135deg, hsla(260, 30%, 20%, 0.4) 0%, hsla(240, 30%, 15%, 0.4) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid hsla(260, 80%, 60%, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px hsla(0, 0%, 0%, 0.3);
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, hsl(260, 80%, 60%) 0%, hsl(260, 80%, 50%) 100%);
+            color: white;
+            box-shadow: 0 4px 15px hsla(260, 80%, 60%, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px hsla(260, 80%, 60%, 0.6);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, hsl(240, 30%, 25%) 0%, hsl(240, 30%, 20%) 100%);
+            color: hsl(0, 0%, 95%);
+            border: 1px solid hsla(260, 80%, 60%, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, hsl(240, 30%, 30%) 0%, hsl(240, 30%, 25%) 100%);
+            border-color: hsla(260, 80%, 60%, 0.5);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, hsl(140, 60%, 50%) 0%, hsl(140, 60%, 40%) 100%);
+            color: white;
+            box-shadow: 0 4px 15px hsla(140, 60%, 50%, 0.4);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px hsla(140, 60%, 50%, 0.6);
+        }
+
+        /* Main Display Area */
+        .display-area {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            animation: fadeIn 0.8s ease-out 0.4s both;
+        }
+
+        .operation-card {
+            background: linear-gradient(135deg, hsla(260, 30%, 20%, 0.5) 0%, hsla(240, 30%, 15%, 0.5) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid hsla(260, 80%, 60%, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px hsla(0, 0%, 0%, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .operation-card:hover {
+            border-color: hsla(260, 80%, 60%, 0.4);
+            box-shadow: 0 12px 40px hsla(260, 80%, 60%, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .operation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .operation-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: hsl(260, 80%, 60%);
+        }
+
+        .operation-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-mutates {
+            background: hsla(0, 70%, 50%, 0.2);
+            color: hsl(0, 70%, 60%);
+            border: 1px solid hsla(0, 70%, 50%, 0.4);
+        }
+
+        .badge-returns {
+            background: hsla(140, 60%, 50%, 0.2);
+            color: hsl(140, 60%, 60%);
+            border: 1px solid hsla(140, 60%, 50%, 0.4);
+        }
+
+        .operation-description {
+            color: hsl(0, 0%, 80%);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        /* Array Visualization */
+        .array-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .array-label {
+            font-size: 0.9rem;
+            color: hsl(0, 0%, 70%);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .array-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: hsla(240, 30%, 10%, 0.5);
+            border-radius: 10px;
+            border: 1px solid hsla(260, 80%, 60%, 0.1);
+            min-height: 60px;
+            align-items: center;
+        }
+
+        .array-bracket {
+            font-size: 2rem;
+            color: hsl(180, 70%, 50%);
+            font-weight: 700;
+        }
+
+        .array-element {
+            padding: 0.6rem 1rem;
+            background: linear-gradient(135deg, hsl(260, 80%, 60%) 0%, hsl(260, 80%, 50%) 100%);
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 10px hsla(260, 80%, 60%, 0.3);
+            animation: elementPop 0.4s ease-out;
+            transition: all 0.3s ease;
+        }
+
+        .array-element:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 6px 15px hsla(260, 80%, 60%, 0.5);
+        }
+
+        .array-element.new {
+            background: linear-gradient(135deg, hsl(140, 60%, 50%) 0%, hsl(140, 60%, 40%) 100%);
+            animation: elementPop 0.4s ease-out, pulse 1s ease-out;
+        }
+
+        .array-element.removed {
+            background: linear-gradient(135deg, hsl(0, 70%, 50%) 0%, hsl(0, 70%, 40%) 100%);
+            opacity: 0.5;
+            text-decoration: line-through;
+        }
+
+        .array-element.string {
+            background: linear-gradient(135deg, hsl(180, 70%, 50%) 0%, hsl(180, 70%, 40%) 100%);
+        }
+
+        /* Code Display */
+        .code-block {
+            background: hsla(240, 30%, 8%, 0.8);
+            border: 1px solid hsla(260, 80%, 60%, 0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: hsl(140, 60%, 60%);
+            overflow-x: auto;
+        }
+
+        .code-comment {
+            color: hsl(0, 0%, 60%);
+        }
+
+        /* Step Counter */
+        .step-counter {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: hsl(180, 70%, 50%);
+            margin-bottom: 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes elementPop {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 4px 10px hsla(140, 60%, 50%, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 4px 20px hsla(140, 60%, 50%, 0.8);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .operation-card {
+                padding: 1.5rem;
+            }
+
+            button {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Loading State */
+        .hidden {
+            display: none;
+        }
+
+        /* Result Display */
+        .result-container {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: hsla(260, 80%, 60%, 0.1);
+            border-left: 4px solid hsl(260, 80%, 60%);
+            border-radius: 8px;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: hsl(260, 80%, 60%);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            font-family: 'Courier New', monospace;
+            color: hsl(140, 60%, 60%);
+            font-size: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Array Operations Visualizer</h1>
+            <p class="subtitle">Master JavaScript Array Methods with Interactive Visual Demonstrations</p>
+        </header>
+
+        <div class="control-panel">
+            <button class="btn-primary" onclick="nextStep()">
+                <span>▶️ Next Step</span>
+            </button>
+            <button class="btn-secondary" onclick="previousStep()">
+                <span>⏮️ Previous</span>
+            </button>
+            <button class="btn-success" onclick="autoPlay()">
+                <span>⚡ Auto Play</span>
+            </button>
+            <button class="btn-secondary" onclick="reset()">
+                <span>🔄 Reset</span>
+            </button>
+        </div>
+
+        <div class="step-counter" id="stepCounter">
+            Step <span id="currentStep">0</span> of <span id="totalSteps">0</span>
+        </div>
+
+        <div class="display-area" id="displayArea">
+            <!-- Operations will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script src="concat.js"></script>
+</body>
+
+</html>

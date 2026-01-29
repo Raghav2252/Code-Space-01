@@ -1,0 +1,40 @@
+*{
+    /* " * " is a universal selector will effect whole page style like font color, padding etc.*/
+    background-color: rgb(103, 180, 120);
+}
+.Box{
+    height: 100px;
+    background-color: rgb(194, 78, 78);
+    margin: 20px;
+    padding: 10px;
+    border: 5px solid rgb(88, 13, 209);
+    border-radius: 5px;
+    display: inline-flex;
+    flex-direction: row;
+}
+.Box1{
+    color: aqua;
+}
+.span1{
+    height: 100px;
+    width: 100px;
+    background-color: aqua;
+    border: 5px solid blue;
+    padding: 10px;
+    margin: 20px;
+}
+ol li:last-child {
+    color: blue;  /* Apply blue color to the last <li> in any <ul> */
+}
+ol{
+    color: brown;
+    background-color: rgb(99, 219, 219);
+}
+a{
+    text-decoration: none;
+    color: chocolate;
+}
+h2, h3{
+    font-style: oblique;
+    color: blue ;
+}

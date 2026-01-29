@@ -1,0 +1,26 @@
+div{
+    height: 500px;
+    width: 200px;
+    background-color: burlywood;
+    margin: 20px;
+}
+#div1{
+    position: static;
+    z-index: 10;
+}
+#div2{
+    position: relative;
+    top: 20px;
+    left: 90px;
+}
+#div3{
+    position: fixed;
+    top: 20px;
+    left: 20px;
+}
+#div4{
+    position: absolute;
+    top: 40px;
+    left: 20px;
+    
+}
